@@ -48,6 +48,8 @@ public slots:
     void cursorsMoved();
     void enableCursors(bool enabled);
     void enableScales(bool enabled);
+    void enableAnnos(bool enabled);
+    void enableAnnoColors(bool enabled);
     void invalidateEvent() override;
     void repaint();
     void setCursorSegments(int segments);

@@ -46,7 +46,7 @@ SpectrogramControls::SpectrogramControls(const QString & title, QWidget * parent
     layout->addRow(new QLabel(tr("<b>Spectrogram</b>")));
 
     fftSizeSlider = new QSlider(Qt::Horizontal, widget);
-    fftSizeSlider->setRange(4, 13);
+    fftSizeSlider->setRange(4, 16);
     fftSizeSlider->setPageStep(1);
 
     layout->addRow(new QLabel(tr("FFT size:")), fftSizeSlider);
@@ -93,6 +93,15 @@ SpectrogramControls::SpectrogramControls(const QString & title, QWidget * parent
     symbolPeriodLabel = new QLabel();
     layout->addRow(new QLabel(tr("Symbol period:")), symbolPeriodLabel);
 
+    // SigMF selection settings
+    layout->addRow(new QLabel()); // TODO: find a better way to add an empty row?
+    layout->addRow(new QLabel(tr("<b>SigMF Control</b>")));
+
+    annosCheckBox = new QCheckBox(widget);
+    layout->addRow(new QLabel(tr("Display Annotations:")), annosCheckBox);
+    annoColorCheckBox = new QCheckBox(widget);
+    layout->addRow(new QLabel(tr("Annotation Colors:")), annoColorCheckBox);
+
     widget->setLayout(layout);
     setWidget(widget);
 
@@ -125,6 +134,9 @@ void SpectrogramControls::setDefaults()
 
     cursorsCheckBox->setCheckState(Qt::Unchecked);
     cursorSymbolsSpinBox->setValue(1);
+
+    annosCheckBox->setCheckState(Qt::Checked);
+    annoColorCheckBox->setCheckState(Qt::Checked);
 
     // Try to set the sample rate from the last-used value
     QSettings settings;

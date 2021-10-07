@@ -40,6 +40,8 @@ SpectrogramPlot::SpectrogramPlot(std::shared_ptr<SampleSource<std::complex<float
     powerMin = -50.0f;
     sampleRate = 0;
     frequencyScaleEnabled = false;
+    sigmfAnnotationsEnabled = true;
+    sigmfAnnotationColors = true;
 
     for (int i = 0; i < 256; i++) {
         float p = (float)i / 256;
@@ -67,7 +69,9 @@ void SpectrogramPlot::paintFront(QPainter &painter, QRect &rect, range_t<size_t>
 
     if (frequencyScaleEnabled)
         paintFrequencyScale(painter, rect);
-    paintAnnotations(painter, rect, sampleRange);
+
+    if (sigmfAnnotationsEnabled)
+        paintAnnotations(painter, rect, sampleRange);
 }
 
 void SpectrogramPlot::paintFrequencyScale(QPainter &painter, QRect &rect)
@@ -189,6 +193,8 @@ void SpectrogramPlot::paintAnnotations(QPainter &painter, QRect &rect, range_t<s
             int y = zero - frequency / sampleRate * rect.height();
             int height = (a.frequencyRange.maximum - a.frequencyRange.minimum) / sampleRate * rect.height();
             int width = (a.sampleRange.maximum - a.sampleRange.minimum) / getStride();
+            
+            if (sigmfAnnotationColors) painter.setPen(a.annoColor);
 
             // Draw the description 2 pixels above the box
             painter.drawText(x, y - 2, a.description);
@@ -391,6 +397,16 @@ void SpectrogramPlot::setSampleRate(double rate)
 void SpectrogramPlot::enableScales(bool enabled)
 {
    frequencyScaleEnabled = enabled;
+}
+
+void SpectrogramPlot::enableAnnos(bool enabled)
+{
+   sigmfAnnotationsEnabled = enabled;
+}
+
+void SpectrogramPlot::enableAnnoColors(bool enabled)
+{
+   sigmfAnnotationColors = enabled;
 }
 
 bool SpectrogramPlot::tunerEnabled()
