@@ -247,7 +247,8 @@ bool PlotView::viewportEvent(QEvent *event) {
                     mouseEvent->button(),
                     mouseEvent->buttons(),
                     QApplication::keyboardModifiers()
-                )
+                ),
+                viewRange
             );
             if (result)
                 return true;

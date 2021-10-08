@@ -330,10 +330,15 @@ int SpectrogramPlot::linesPerTile()
     return tileSize / fftSize;
 }
 
-bool SpectrogramPlot::mouseEvent(QEvent::Type type, QMouseEvent event)
+bool SpectrogramPlot::mouseEvent(QEvent::Type type, QMouseEvent event, range_t<size_t> sampleRange)
 {
     if (tunerEnabled())
-        return tuner.mouseEvent(type, event);
+        return tuner.mouseEvent(type, event, sampleRange);
+
+    if (event.type() == QEvent::MouseButtonRelease) {
+      int sample = sampleRange.minimum + getStride() * event.pos().x();
+      double freq = ((0.5 - double(event.pos().y()) / height()) * sampleRate + inputSource->getFrequency());
+    }
 
     return false;
 }

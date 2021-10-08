@@ -34,7 +34,7 @@ void Plot::invalidateEvent()
 
 }
 
-bool Plot::mouseEvent(QEvent::Type type, QMouseEvent event)
+bool Plot::mouseEvent(QEvent::Type type, QMouseEvent event, range_t<size_t> sampleRange)
 {
 	return false;
 }
