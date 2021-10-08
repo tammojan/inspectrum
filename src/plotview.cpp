@@ -201,7 +201,6 @@ void PlotView::keyPressEvent(QKeyEvent *keyEvent) {
 
     if (key == Qt::Key_Space) {
         setDragMode(QGraphicsView::ScrollHandDrag);
-        spacebar_is_down = true;
     }
 
     QGraphicsView::keyPressEvent(keyEvent);
@@ -209,7 +208,6 @@ void PlotView::keyPressEvent(QKeyEvent *keyEvent) {
 
 void PlotView::keyReleaseEvent(QKeyEvent *keyEvent) {
     if (keyEvent->key() == Qt::Key_Space) {
-        spacebar_is_down = false;
         setDragMode(QGraphicsView::NoDrag);
     }
 }

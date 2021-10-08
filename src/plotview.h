@@ -82,7 +82,6 @@ private:
     int nfftSkip = 1;
     int last_y_clicked = 0;
     int last_x_clicked = 0;
-    bool spacebar_is_down = false;
     int powerMin;
     int powerMax;
     bool cursorsEnabled;
