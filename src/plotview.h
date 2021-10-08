@@ -64,6 +64,7 @@ protected:
     void scrollContentsBy(int dx, int dy) override;
     bool viewportEvent(QEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
+    void keyReleaseEvent(QKeyEvent *event) override;
     void showEvent(QShowEvent *event) override;
 
 private:
@@ -81,6 +82,7 @@ private:
     int nfftSkip = 1;
     int last_y_clicked = 0;
     int last_x_clicked = 0;
+    bool spacebar_is_down = false;
     int powerMin;
     int powerMax;
     bool cursorsEnabled;

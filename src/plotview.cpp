@@ -38,7 +38,7 @@
 PlotView::PlotView(InputSource *input) : cursors(this), viewRange({0, 0})
 {
     mainSampleSource = input;
-    setDragMode(QGraphicsView::ScrollHandDrag);
+    setDragMode(QGraphicsView::NoDrag);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     setMouseTracking(true);
     enableCursors(false);
@@ -199,7 +199,19 @@ void PlotView::keyPressEvent(QKeyEvent *keyEvent) {
         return;
     }
 
+    if (key == Qt::Key_Space) {
+        setDragMode(QGraphicsView::ScrollHandDrag);
+        spacebar_is_down = true;
+    }
+
     QGraphicsView::keyPressEvent(keyEvent);
+}
+
+void PlotView::keyReleaseEvent(QKeyEvent *keyEvent) {
+    if (keyEvent->key() == Qt::Key_Space) {
+        spacebar_is_down = false;
+        setDragMode(QGraphicsView::NoDrag);
+    }
 }
 
 bool PlotView::viewportEvent(QEvent *event) {
