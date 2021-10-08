@@ -28,6 +28,8 @@
 #include <liquid/liquid.h>
 #include <functional>
 #include <cstdlib>
+#include <iostream>
+#include <iomanip>
 #include "util.h"
 
 
@@ -338,6 +340,9 @@ bool SpectrogramPlot::mouseEvent(QEvent::Type type, QMouseEvent event, range_t<s
     if (event.type() == QEvent::MouseButtonRelease) {
       int sample = sampleRange.minimum + getStride() * event.pos().x();
       double freq = ((0.5 - double(event.pos().y()) / height()) * sampleRate + inputSource->getFrequency());
+      std::cout<<"Freq   = " << std::fixed << std::setprecision(0) << freq << " Hz" << std::endl;
+      std::cout<<"Sample = " << sample << std::endl;
+      std::cout<<"Time   = "<< std::fixed << std::setprecision(4) << sample/sampleRate << " s" <<std::endl;
     }
 
     return false;
