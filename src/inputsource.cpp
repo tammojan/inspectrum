@@ -39,6 +39,7 @@
 #include <QJsonArray>
 #include <QFile>
 #include <QColor>
+#include <QMessageBox>
 
 
 class ComplexF32SampleAdapter : public SampleAdapter {
@@ -290,7 +291,24 @@ void InputSource::readMetaData(const QString &filename)
                 const double freq_upper_edge = sigmf_annotation["core:freq_upper_edge"].toDouble();
                 a.frequencyRange = range_t<double>{freq_lower_edge, freq_upper_edge};
 
-                a.description = sigmf_annotation["core:description"].toString();
+                if(sigmf_annotation.contains("core:description")) {
+                    static bool warning_shown;
+                    if(!warning_shown) {
+                        QMessageBox msgBox(QMessageBox::Warning, "SigMF Warning", "Support for core:description fields in SigMF annotations is deprectated and will be removed in the future. Please use core:label fields instead.");
+                        msgBox.exec();
+                        warning_shown = true;
+                    }
+
+                    a.description = sigmf_annotation["core:description"].toString();
+                }
+                else {
+                    if(sigmf_annotation.contains("core:label")) {
+                        a.description = sigmf_annotation["core:label"].toString();
+                    }
+                    else if(sigmf_annotation.contains("core:comment")) {
+                        a.description = sigmf_annotation["core:comment"].toString();
+                    }
+                }
 
                 annotationList.append(a);
             }
